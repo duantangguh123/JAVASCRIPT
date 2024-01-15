@@ -1,0 +1,55 @@
+import React, { useState } from 'react';
+
+const HargaAkhirCalculator = () => {
+  const [hargaPembelian, setHargaPembelian] = useState('');
+  const [ppn, setPpn] = useState('');
+  const [diskon, setDiskon] = useState('');
+  const [hargaAkhir, setHargaAkhir] = useState(null);
+
+  const hitungHargaAkhir = () => {
+    // Validasi input
+    if (isNaN(hargaPembelian) || isNaN(ppn) || isNaN(diskon)) {
+      alert('Masukkan nilai yang valid!');
+      return;
+    }
+
+    // Menghitung harga akhir
+    const hargaSetelahPpn = parseFloat(hargaPembelian) + (parseFloat(hargaPembelian) * parseFloat(ppn) / 100);
+    const hargaSetelahDiskon = hargaSetelahPpn - (hargaSetelahPpn * parseFloat(diskon) / 100);
+
+    setHargaAkhir(hargaSetelahDiskon.toFixed(2));
+  };
+
+  return (
+    <div>
+      <h2>Kalkulator Harga Akhir</h2>
+
+      <label>Harga Pembelian (Rp):</label>
+      <input type="number" value={hargaPembelian} onChange={(e) => setHargaPembelian(e.target.value)} />
+
+      <br />
+
+      <label>PPN (%):</label>
+      <input type="number" value={ppn} onChange={(e) => setPpn(e.target.value)} />
+
+      <br />
+
+      <label>Diskon (%):</label>
+      <input type="number" value={diskon} onChange={(e) => setDiskon(e.target.value)} />
+
+      <br />
+
+      <button onClick={hitungHargaAkhir}>Hitung</button>
+
+      <br />
+
+      {hargaAkhir !== null && (
+        <div>
+          <p>Harga Akhir: Rp {hargaAkhir}</p>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default HargaAkhirCalculator;
