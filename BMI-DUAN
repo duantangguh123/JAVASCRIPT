@@ -1,0 +1,89 @@
+import React, {Component} from 'react';
+import './App.css';
+
+class App extends Component{
+  render() {
+    return (
+      <div classname='App'>
+      <h1 classname='judul'>Project ReactJS</h1>
+      <p classname='subJudul'>Sangat Menyenangkan</p>
+      <button classname='mr-1 btn btn-sucsess'>sucsess</button>
+      <button classname='btn btn-info'>Iya</button>
+    </div>
+    )
+  }
+}
+
+export default App;
+import React, { useState } from 'react';
+
+function BmiCalculator() {
+  const [beratBadan, setBeratBadan] = useState('');
+  const [tinggiBadan, setTinggiBadan] = useState('');
+  const [hasilBMI, setHasilBMI] = useState(null);
+  const [kategoriBMI, setKategoriBMI] = useState('');
+
+  const hitungBMI = () => {
+    const berat = parseFloat(beratBadan);
+    const tinggi = parseFloat(tinggiBadan);
+
+    if (isNaN(berat) || isNaN(tinggi) || berat <= 0 || tinggi <= 0) {
+      alert("Masukkan nilai berat badan dan tinggi badan yang valid!");
+      return;
+    }
+
+    const bmi = berat / Math.pow(tinggi, 2);
+    setHasilBMI(bmi.toFixed(2));
+
+    if (bmi < 18.5) {
+      setKategoriBMI("Kurang berat badan");
+    } else if (bmi < 25) {
+      setKategoriBMI("Normal");
+    } else if (bmi < 30) {
+      setKategoriBMI("Kelebihan berat badan");
+    } else {
+      setKategoriBMI("Obesitas");
+    }
+  };
+
+  return (
+    <div>
+      <h2>Kalkulator BMI</h2>
+
+      <label htmlFor="beratBadan">Berat Badan (kg):</label>
+      <input
+        type="number"
+        id="beratBadan"
+        value={beratBadan}
+        onChange={(e) => setBeratBadan(e.target.value)}
+        placeholder="Masukkan berat badan"
+      />
+
+      <br />
+
+      <label htmlFor="tinggiBadan">Tinggi Badan (m):</label>
+      <input
+        type="number"
+        id="tinggiBadan"
+        value={tinggiBadan}
+        onChange={(e) => setTinggiBadan(e.target.value)}
+        placeholder="Masukkan tinggi badan"
+      />
+
+      <br /><br />
+
+      <button onClick={hitungBMI}>Hitung BMI</button>
+
+      <br /><br />
+
+      {hasilBMI && (
+        <div>
+          <p>BMI Anda: {hasilBMI}</p>
+          <p>Kategori BMI: {kategoriBMI}</p>
+        </div>
+      )}
+    </div>
+  );
+}
+
+export default BmiCalculator;
