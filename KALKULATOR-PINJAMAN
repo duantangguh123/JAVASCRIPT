@@ -1,0 +1,62 @@
+import React, { useState } from 'react';
+
+const CicilanCalculator = () => {
+  const [jumlahPinjaman, setJumlahPinjaman] = useState('');
+  const [sukuBunga, setSukuBunga] = useState('');
+  const [durasi, setDurasi] = useState('');
+  const [cicilanBulanan, setCicilanBulanan] = useState(null);
+
+  const hitungCicilan = () => {
+    // Validasi input
+    if (!jumlahPinjaman || !sukuBunga || !durasi) {
+      alert('Mohon isi semua field!');
+      return;
+    }
+
+    // Menghitung cicilan bulanan
+    const sukuBungaBulanan = sukuBunga / 100 / 12;
+    const durasiBulan = durasi * 12;
+    const cicilan = (jumlahPinjaman * sukuBungaBulanan) / (1 - Math.pow(1 + sukuBungaBulanan, -durasiBulan));
+    setCicilanBulanan(cicilan.toFixed(2));
+  };
+
+  return (
+    <div>
+      <h2>Kalkulator Cicilan Pinjaman</h2>
+
+      <label>Jumlah Pinjaman (IDR):</label>
+      <input
+        type="number"
+        value={jumlahPinjaman}
+        onChange={(e) => setJumlahPinjaman(e.target.value)}
+      />
+
+      <label>Suku Bunga (%):</label>
+      <input
+        type="number"
+        value={sukuBunga}
+        onChange={(e) => setSukuBunga(e.target.value)}
+      />
+
+      <label>Durasi Pinjaman (tahun):</label>
+      <input
+        type="number"
+        value={durasi}
+        onChange={(e) => setDurasi(e.target.value)}
+      />
+
+      <button onClick={hitungCicilan}>Hitung Cicilan</button>
+
+      {cicilanBulanan !== null && (
+        <div>
+          <h3>Hasil Perhitungan</h3>
+          <p>Cicilan Bulanan: Rp {new Intl.NumberFormat('id-ID').format(cicilanBulanan)}</p>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default CicilanCalculator;
+
+
