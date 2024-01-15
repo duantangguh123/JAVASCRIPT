@@ -1,0 +1,48 @@
+import React, { useState } from 'react';
+
+const NumberConverter = () => {
+  const [decimal, setDecimal] = useState('');
+  const [binary, setBinary] = useState('');
+  const [octal, setOctal] = useState('');
+  const [hexadecimal, setHexadecimal] = useState('');
+
+  const handleConvert = () => {
+    const decimalValue = parseInt(decimal, 10);
+    if (!isNaN(decimalValue)) {
+      setBinary(decimalValue.toString(2));
+      setOctal(decimalValue.toString(8));
+      setHexadecimal(decimalValue.toString(16).toUpperCase());
+    } else {
+      alert('Masukkan bilangan desimal yang valid!');
+    }
+  };
+
+  return (
+    <div>
+      <h2>Kalkulator Konversi Bilangan</h2>
+
+      <label>Decimal:</label>
+      <input type="text" value={decimal} onChange={(e) => setDecimal(e.target.value)} />
+
+      <button onClick={handleConvert}>Hitung</button>
+
+      <div>
+        <label>Biner:</label>
+        <span>{binary}</span>
+      </div>
+
+      <div>
+        <label>Octal:</label>
+        <span>{octal}</span>
+      </div>
+
+      <div>
+        <label>Hexadecimal:</label>
+        <span>{hexadecimal}</span>
+      </div>
+    </div>
+  );
+};
+
+export default NumberConverter;
+
